@@ -4,13 +4,11 @@ import pandas as pd
 import time
 import re
 
-
-agent = "TaxonID-Scale-Project/1.0 (silvestre.castro.luiz@gmail.com)"
+agent = "TaxonID (silvestre.castro.luiz@gmail.com)"
 lingua = 'en'
-max_especies = 1000  # O novo alvo
+max_especies = 1000
 output = "data/raw/df_borboletas.csv"
 
-# --- 1. DESCOBERTA ESCALADA (iNaturalist com Paginação) ---
 def especies_list(target=1000):
     all_species = []
     page = 1
@@ -23,13 +21,13 @@ def especies_list(target=1000):
             data = r.json()
             
             names = [t['name'] for t in data['results']]
-            if not names: break # Acabaram as espécies
+            if not names: break
             
             all_species.extend(names)
             print(f"\n pagina {page} processada ({len(all_species)} nomes encontrados)")
             
             page += 1
-            time.sleep(1) # Delay entre páginas da API
+            time.sleep(1)
         except Exception as e:
             print(f"\n erro na pagina {page}: {e}")
             break
